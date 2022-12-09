@@ -16,9 +16,15 @@
        aria-current="page">
         Events
     </a>
+    @guest
+        <li class="nav-item"><a href="{{ route('login') }}" class="nav-link {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">Login</a></li>
+        <li class="nav-item"><a href="{{ route('register') }}" class="nav-link {{ Route::currentRouteName() == 'register' ? 'active' : '' }}">Register</a></li>
+    @else
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+        </li>
+    @endguest
     {{-- public --}}
-    <li class="nav-item"><a href="#" class="nav-link">Login</a></li>
-    <li class="nav-item"><a href="#" class="nav-link">Register</a></li>
     {{-- loggedIn --}}
 {{--    <li class="nav-item"><a href="#" class="nav-link">Mijn tickets</a></li>--}}
 {{--    <li class="nav-item"><a href="#" class="nav-link">Uitloggen</a></li>--}}

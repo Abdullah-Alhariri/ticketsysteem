@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PagesController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PagesController::class, 'home'])->name('home');
 
 Route::get('/events', [PagesController::class, 'show_events'])->name('events');
+
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/login', [AuthController::class, 'postLogin'])->name('login.post');
+Route::post('/register', [AuthController::class, 'postRegistration'])->name('register.post');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
 
 //Route::get('/cars', [PagesController::class, 'getAllCars'])->name('cars');
 //Route::get('/add-car', [PagesController::class, 'addCar'])->name('add-car');

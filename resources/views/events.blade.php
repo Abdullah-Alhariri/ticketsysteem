@@ -3,6 +3,8 @@
 @section('content')
     <h1>Events</h1>
     @foreach($events as $event )
-        {{$events->display}}
+        {{ $event->display }}
+        {{ $event->location }}
+        {{ $event->description }}
     @endforeach
 @endsection

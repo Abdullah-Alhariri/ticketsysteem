@@ -21,23 +21,6 @@ class PagesController extends Controller
         ]);
     }
 
-
-//    public function addCar() {
-//        return view('add-car');
-//    }
-//
-//    public function processNewCar(Request $request) {
-//        $newCar = new Car();
-//        $newCar->brand = $request->brand;
-//        $newCar->amount_of_tires = $request->tires;
-//        $newCar->description = $request->description;
-//        $newCar->release_date = $request->release_date;
-//
-//        $newCar->save();
-//
-//        return redirect()->route('cars');
-//    }
-
 //    public function getAllCars(){
 //        $allCars = Car::all();
 //        $allAudis = Car::where('brand', 'Audi')->get();
