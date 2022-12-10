@@ -78,7 +78,10 @@ class PagesController extends Controller
             'url' => route('process_create_event')
         ], $event->getFormFields());
 
-        return view('create_event', compact('form'));
+        return view('create_event', [
+            'id' => $event->id,
+            ...compact('form'),
+        ]);
     }
 
     public function process_create_event(Request $request)
@@ -106,7 +109,10 @@ class PagesController extends Controller
             'url' => route('process_edit_event', ['id' => $id]),
         ], $event->getFormFields());
 
-        return view('create_event', compact('form'));
+        return view('create_event', [
+            'id' => $event->id,
+            ...compact('form'),
+        ]);
     }
 
     public function process_edit_event($id, Request $request)
@@ -124,7 +130,8 @@ class PagesController extends Controller
         return redirect()->route('admin');
     }
 
-    public function process_delete_event($id) {
+    public function process_delete_event($id)
+    {
         $event = CalendarEvent::findOrFail($id);
         $event->delete();
 
