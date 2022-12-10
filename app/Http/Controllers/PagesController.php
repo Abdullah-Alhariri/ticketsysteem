@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 //use Illuminate\Http\Request;
 //use App\Models\Car;
 use App\Models\CalendarEvent;
+use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
@@ -21,6 +22,41 @@ class PagesController extends Controller
         ]);
     }
 
+    public function tickets()
+    {
+        return view('tickets');
+    }
+
+    public function admin()
+    {
+        $events = CalendarEvent::all();
+        return view('admin', [
+            'events'=> $events
+        ]);
+    }
+
+    public function create_event()
+    {
+        return view('create_event', [
+
+        ]);
+    }
+    public function process_create_event(Request $request)
+    {
+        dd($request);
+//        $event = new CalendarEvent();
+//        $this->edit($request, $event);
+//        return view('edit_event', [
+//
+//        ]);
+    }
+
+//    public function edit(Request $request, CalendarEvent $event)
+//    {
+//        return view('admin', [
+//            'events'=> $events
+//        ]);
+//    }
 //    public function getAllCars(){
 //        $allCars = Car::all();
 //        $allAudis = Car::where('brand', 'Audi')->get();

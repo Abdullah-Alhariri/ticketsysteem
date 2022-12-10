@@ -17,17 +17,34 @@
         Events
     </a>
     @guest
-        <li class="nav-item"><a href="{{ route('login') }}"
-                                class="nav-link {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">Login</a>
+        <li class="nav-item">
+            <a href="{{ route('login') }}"
+               class="nav-link {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">
+                Login
+            </a>
         </li>
         <li class="nav-item">
             <a href="{{ route('register') }}"
-               class="nav-link {{ Route::currentRouteName() == 'register' ? 'active' : '' }}">Register</a>
+               class="nav-link {{ Route::currentRouteName() == 'register' ? 'active' : '' }}">
+                Register
+            </a>
         </li>
     @else
         <li class="nav-item">
-            <a href="#" class="nav-link">Mijn tickets</a>
+            <a href="{{ route('tickets') }}"
+               class="nav-link {{ Route::currentRouteName() == 'tickets' ? 'active' : '' }}">
+                Mijn tickets
+            </a>
         </li>
+
+        @if(Auth::user()->hasRole('ROLE_ADMIN'))
+            <li class="nav-item">
+                <a href="{{ route('admin') }}"
+                   class="nav-link {{ Route::currentRouteName() == 'admin' ? 'active' : '' }}">
+                    Admin
+                </a>
+            </li>
+        @endif
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <li class="nav-item">
