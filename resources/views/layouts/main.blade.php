@@ -22,7 +22,7 @@
     @include('components.header')
 </header>
 
-<main class="container">
+<main class="container mb-5">
     @yield('content')
 </main>
 </body>

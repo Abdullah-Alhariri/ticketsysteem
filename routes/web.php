@@ -16,5 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PagesController::class, 'home'])->name('home');
 Route::get('/events', [PagesController::class, 'show_events'])->name('events');
+Route::get('/events/{id}', [PagesController::class, 'detail_event'])->name('detail_event');
 
 require __DIR__.'/auth.php';

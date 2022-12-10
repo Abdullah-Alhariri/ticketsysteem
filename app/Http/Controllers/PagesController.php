@@ -6,7 +6,10 @@ namespace App\Http\Controllers;
 //use App\Models\Car;
 use App\Forms\EditEventType;
 use App\Models\CalendarEvent;
+use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Kris\LaravelFormBuilder\FormBuilder;
 
 class PagesController extends Controller
@@ -24,9 +27,38 @@ class PagesController extends Controller
         ]);
     }
 
+    public function detail_event($id)
+    {
+        $event = CalendarEvent::findOrFail($id);
+        return view('event', [
+            'event' => $event
+        ]);
+    }
+
+    public function process_buy_event($id)
+    {
+        $event = CalendarEvent::findOrFail($id);
+        $ticket = new Ticket();
+        $ticket->uuid = Str::uuid()->toString();
+        $ticket->event_id = $event->id;
+        $ticket->user_id = Auth::user()->id;
+        $ticket->save();
+
+        return redirect()->route('tickets');
+    }
+
     public function tickets()
     {
         return view('tickets');
+    }
+
+    public function detail_ticket($uuid)
+    {
+        $ticket = Ticket::where('uuid', $uuid)->firstOrFail();
+
+        return view('ticket', [
+            'ticket' => $ticket
+        ]);
     }
 
     public function admin()
@@ -98,61 +130,4 @@ class PagesController extends Controller
 
         return redirect()->route('admin');
     }
-
-//    public function edit(Request $request, CalendarEvent $event)
-//    {
-//        return view('admin', [
-//            'events'=> $events
-//        ]);
-//    }
-//    public function getAllCars(){
-//        $allCars = Car::all();
-//        $allAudis = Car::where('brand', 'Audi')->get();
-//        return view('cars', [
-//            'cars' => $allCars,
-//            'audis' => $allAudis,
-//        ]);
-//    }
-//
-//    public function addCar() {
-//        return view('add-car');
-//    }
-//
-//    public function processNewCar(Request $request) {
-//        $newCar = new Car();
-//        $newCar->brand = $request->brand;
-//        $newCar->amount_of_tires = $request->tires;
-//        $newCar->description = $request->description;
-//        $newCar->release_date = $request->release_date;
-//
-//        $newCar->save();
-//
-//        return redirect()->route('cars');
-//    }
-//
-//    public function editCar($id) {
-//        $car = Car::findOrFail($id);
-//        return view('edit-car', [
-//            'car' => $car
-//        ]);
-//    }
-//
-//    public function processEditCar(Request $request, $id) {
-//        $car = Car::findOrFail($id);
-//        $car->brand = $request->brand;
-//        $car->amount_of_tires = $request->tires;
-//        $car->description = $request->description;
-//        $car->release_date = $request->release_date;
-//
-//        $car->save();
-//
-//        return redirect()->route('cars');
-//    }
-//
-//    public function deleteCar($id) {
-//        $car = Car::findOrFail($id);
-//        $car->delete();
-//
-//        return redirect()->route('cars');
-//    }
 }

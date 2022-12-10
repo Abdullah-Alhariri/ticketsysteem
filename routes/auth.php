@@ -56,6 +56,7 @@ Route::middleware('auth')->group(function () {
                 ->name('logout');
 
     Route::get('/tickets', [PagesController::class, 'tickets'])->name('tickets');
+    Route::get('/detail_ticket/{id}', [PagesController::class, 'detail_ticket'])->name('detail_ticket');
 
     Route::get('/admin', [PagesController::class, 'admin'])->middleware('role.admin')->name('admin');
     Route::get('/create_event', [PagesController::class, 'create_event'])->middleware('role.admin')->name('create_event');
@@ -64,4 +65,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/edit_event/{id}', [PagesController::class, 'edit_event'])->middleware('role.admin')->name('edit_event');
     Route::post('/process_edit_event/{id}', [PagesController::class, 'process_edit_event'])->middleware('role.admin')->name('process_edit_event');
     Route::get('/process_delete_event/{id}', [PagesController::class, 'process_delete_event'])->middleware('role.admin')->name('process_delete_event');
+
+    Route::get('/process_buy_event/{id}', [PagesController::class, 'process_buy_event'])->name('process_buy_event');
 });
