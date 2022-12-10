@@ -17,15 +17,27 @@
         Events
     </a>
     @guest
-        <li class="nav-item"><a href="{{ route('login') }}" class="nav-link {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">Login</a></li>
-        <li class="nav-item"><a href="{{ route('register') }}" class="nav-link {{ Route::currentRouteName() == 'register' ? 'active' : '' }}">Register</a></li>
+        <li class="nav-item"><a href="{{ route('login') }}"
+                                class="nav-link {{ Route::currentRouteName() == 'login' ? 'active' : '' }}">Login</a>
+        </li>
+        <li class="nav-item">
+            <a href="{{ route('register') }}"
+               class="nav-link {{ Route::currentRouteName() == 'register' ? 'active' : '' }}">Register</a>
+        </li>
     @else
         <li class="nav-item">
-            <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+            <a href="#" class="nav-link">Mijn tickets</a>
         </li>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <li class="nav-item">
+                <x-dropdown-link :href="route('logout')"
+                                 class="text-secondary"
+                                 onclick="event.preventDefault();
+                                                this.closest('form').submit();">
+                    {{ __('Uitloggen') }}
+                </x-dropdown-link>
+            </li>
+        </form>
     @endguest
-    {{-- public --}}
-    {{-- loggedIn --}}
-{{--    <li class="nav-item"><a href="#" class="nav-link">Mijn tickets</a></li>--}}
-{{--    <li class="nav-item"><a href="#" class="nav-link">Uitloggen</a></li>--}}
 </ul>
