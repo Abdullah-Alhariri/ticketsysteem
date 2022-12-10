@@ -59,6 +59,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/admin', [PagesController::class, 'admin'])->middleware('role.admin')->name('admin');
     Route::get('/create_event', [PagesController::class, 'create_event'])->middleware('role.admin')->name('create_event');
-    Route::get('/process_create_event', [PagesController::class, 'process_create_event'])->middleware('role.admin')->name('process_create_event');
+    Route::post('/process_create_event', [PagesController::class, 'process_create_event'])->middleware('role.admin')->name('process_create_event');
 
+    Route::get('/edit_event/{id}', [PagesController::class, 'edit_event'])->middleware('role.admin')->name('edit_event');
+    Route::post('/process_edit_event/{id}', [PagesController::class, 'process_edit_event'])->middleware('role.admin')->name('process_edit_event');
+    Route::get('/process_delete_event/{id}', [PagesController::class, 'process_delete_event'])->middleware('role.admin')->name('process_delete_event');
 });

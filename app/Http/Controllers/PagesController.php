@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 //use Illuminate\Http\Request;
 //use App\Models\Car;
+use App\Forms\EditEventType;
 use App\Models\CalendarEvent;
 use Illuminate\Http\Request;
+use Kris\LaravelFormBuilder\FormBuilder;
 
 class PagesController extends Controller
 {
@@ -17,8 +19,8 @@ class PagesController extends Controller
     public function show_events()
     {
         $events = CalendarEvent::all();
-        return view('events',[
-            'events'=> $events
+        return view('events', [
+            'events' => $events
         ]);
     }
 
@@ -31,24 +33,70 @@ class PagesController extends Controller
     {
         $events = CalendarEvent::all();
         return view('admin', [
-            'events'=> $events
+            'events' => $events
         ]);
     }
 
-    public function create_event()
+    public function create_event(FormBuilder $formBuilder)
     {
-        return view('create_event', [
+        $event = new CalendarEvent();
 
-        ]);
+        $form = $formBuilder->create(EditEventType::class, [
+            'method' => 'POST',
+            'url' => route('process_create_event')
+        ], $event->getFormFields());
+
+        return view('create_event', compact('form'));
     }
+
     public function process_create_event(Request $request)
     {
-        dd($request);
-//        $event = new CalendarEvent();
-//        $this->edit($request, $event);
-//        return view('edit_event', [
-//
-//        ]);
+        $event = new CalendarEvent();
+        $event->display = $request->name;
+        $event->start_date = $request->start_date;
+        $event->end_date = $request->end_date;
+        $event->tickets = $request->available_tickets;
+        $event->price = $request->price;
+        $event->location = $request->location;
+        $event->description = $request->description;
+        $event->save();
+
+        return redirect()->route('admin');
+    }
+
+    public function edit_event($id, FormBuilder $formBuilder)
+    {
+        $event = CalendarEvent::findOrFail($id);
+
+
+        $form = $formBuilder->create(EditEventType::class, [
+            'method' => 'POST',
+            'url' => route('process_edit_event', ['id' => $id]),
+        ], $event->getFormFields());
+
+        return view('create_event', compact('form'));
+    }
+
+    public function process_edit_event($id, Request $request)
+    {
+        $event = CalendarEvent::findOrFail($id);
+        $event->display = $request->name;
+        $event->start_date = $request->start_date;
+        $event->end_date = $request->end_date;
+        $event->tickets = $request->available_tickets;
+        $event->price = $request->price;
+        $event->location = $request->location;
+        $event->description = $request->description;
+        $event->save();
+
+        return redirect()->route('admin');
+    }
+
+    public function process_delete_event($id) {
+        $event = CalendarEvent::findOrFail($id);
+        $event->delete();
+
+        return redirect()->route('admin');
     }
 
 //    public function edit(Request $request, CalendarEvent $event)
